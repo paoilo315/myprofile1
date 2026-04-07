@@ -1,0 +1,208 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #ba9fd6 100%);
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+#heading {
+    text-align: center;
+    background-color: rgba(250, 243, 243, 0.9);
+    color: #a0bfe2;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+#welcome {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #4a90e2;
+}
+
+#heading img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#mybio {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #2c3e50;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    text-align: center;
+}
+
+#mybio h1 {
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+#mybio p {
+    color: #5b0566;
+    font-weight: bold;
+    font-size: 20px;
+}
+#menu {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    margin: 30px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+#menu ul {
+list-style-type: none;
+}
+
+#menu ul li {
+display: inline-block;
+margin-right: 20px;
+font-size: 20px;
+font-weight: bold;
+}
+
+#menu a {
+    color: #4a90e2;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#menu a:hover {
+    color: #e74c3c;
+}
+
+#about, #projects {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+#about h1, #projects h1 {
+    color: #27ae60;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+#projects ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#projects li {
+    background-color: #ecf0f1;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #3498db;
+
+}
+
+#feedback {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+#feedback h1 {
+    color: #9b59b6;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.feedback-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 10px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.feedback-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+#feedback textarea {
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+#submit-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin-top: 15px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#submit-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    #heading {
+        padding: 20px 10px;
+    }
+    
+    #welcome {
+        font-size: 2em;
+    }
+    
+    #heading img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    #mybio, #about, #projects, #feedback {
+        padding: 20px;
+        margin: 20px 10px;
+    }
+    
+    #menu {
+        padding: 10px;
+        margin: 20px 10px;
+    }
+    
+    #menu a {
+        display: inline-block;
+        margin: 0;
+        padding: 8px 10px;
+    }
+}

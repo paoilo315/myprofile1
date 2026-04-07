@@ -4,21 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact me</title>
+    <style>
+        body{
+        background-color: rgb(207, 222, 228);
+        color: rgb(231, 7, 7);
+    font-size: 20px;
+    font-weight: bold;
+    
+        }
+#contact {
+    background-color: rgb(238, 233, 233);
+    padding: 10px;
+    border-radius: 130px; height: 400px; width: 400px;
+    margin-top: 250px;
+    margin-left: 800px;
+}
+#contact h1 {
+    color: rgb(105, 19, 161);
+}
+#contact button {
+    background-color: rgb(105, 19, 161);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+#contact button:hover {
+    background-color: rgb(231, 7, 7);
+    transform: translateY(-2px);
+}
+#contact input, #contact textarea {
+    width: 100%;
+}
+
+    </style>
 </head>
 <body>
     <div align="center" id="contact">
         <h1>contact me</h1>
-        <p>fullname: <input type="text"/></p>
-        <p>email address: <input type="email"/></p>
-        <p>contact: <input type="contact"/></p>
+        <label>fullname:</label>
+        <input type="text" placeholder="enter your fullname">
+        <label>email adddress:</label>
+        <input type="text" placeholder="enter your email">
+        <label>contact:</label>
+        <input type="text" placeholder="enter contact">
         <p>your message: <textarea ></textarea></p>
         <button>submit</button>
     </div>
-    <style>
-        body{
-            background-color: aquamarine;
-        }
-    </style>
+        
 
 </body>
 </html>
