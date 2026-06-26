@@ -3,75 +3,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Simple styling -->
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
     body {
-      height: 100vh;
+      font-family: Arial;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
     }
 
     .container {
       background: white;
-      padding: 30px;
-      border-radius: 12px;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
+
+    input, textarea, button {
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-
-    input:focus, textarea:focus {
-      border-color: #667eea;
+      margin: 10px 0;
+      padding: 10px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      border: none;
       background: #667eea;
       color: white;
-      border-radius: 8px;
-      font-size: 16px;
+      border: none;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #5a67d8;
-    }
-
-    .msg {
-      text-align: center;
-      margin-top: 10px;
+    #successMsg {
+      color: green;
       display: none;
     }
 
-    .success { color: green; }
-    .error { color: red; }
+    #errorMsg {
+      color: red;
+      display: none;
+    }
   </style>
 
 </head>
@@ -79,24 +54,22 @@
 <body>
 
 <div class="container">
-  <h2>Contact Us</h2>
+  <h2>Contact</h2>
 
   <form id="contactForm">
-    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="name" placeholder="Name" required>
     <input type="email" id="email" placeholder="Email" required>
-    <input type="text" id="contact" placeholder="Phone Number" required>
-    <textarea id="message" placeholder="Your Message" required></textarea>
+    <input type="text" id="contact" placeholder="Phone" required>
+    <textarea id="message" placeholder="Message" required></textarea>
 
 ```
 <button type="submit">Send Message</button>
-    <p id="successMsg" class="msg success"></p>
-<p id="errorMsg" class="msg error"></p>
-
-<p id="successMsg" class="msg success">✅ Message sent!</p>
-<p id="errorMsg" class="msg error">❌ Failed to send</p>
 ```
 
   </form>
+
+  <p id="successMsg"></p>
+  <p id="errorMsg"></p>
 </div>
 
 <!-- Supabase -->
@@ -131,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ]);
 
     if (error) {
+      console.error(error);
       errorMsg.innerText = "❌ Failed to send message";
       errorMsg.style.display = "block";
     } else {
@@ -141,39 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
-  const supabase = window.supabase.createClient(
-    "https://npgwvbgyfxptkkcondav.supabase.co",
-    "sb_publishable_Sl97ODLF3RzUhsaOBkBctA_D8dYpqno"
-  );
-
-  const form = document.getElementById("contactForm");
-  const successMsg = document.getElementById("successMsg");
-  const errorMsg = document.getElementById("errorMsg");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    successMsg.style.display = "none";
-    errorMsg.style.display = "none";
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const contact = document.getElementById("contact").value;
-    const message = document.getElementById("message").value;
-
-    const { error } = await supabase.from("messages").insert([
-      { name, email, contact, message }
-    ]);
-
-    if (error) {
-      console.error(error);
-      errorMsg.style.display = "block";
-    } else {
-      successMsg.style.display = "block";
-      form.reset();
-    }
-  });
 </script>
 
 </body>
 </html>
+
