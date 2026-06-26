@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('exportCsv');
   const clearAllBtn = document.getElementById('clearAll');
   const clearFormBtn = document.getElementById('clearForm');
+  const messageCount = document.getElementById('messageCount');
 
   const STORAGE_KEY = 'contactSubmissions';
 
@@ -34,16 +35,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function escapeHtml(text){
     if(!text && text !== 0) return '';
-    return String(text).replace(/[&<>\"']/g, (m)=>({
-      '&':'&amp;', '<':'&lt;', '>':'&gt;', '\"':'&quot;', "'":"&#39;"
+    return String(text).replace(/[&<>"']/g, (m)=>({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":"&#39;"
     }[m]));
+  }
+
+  function initials(name){
+    if(!name) return '??';
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if(parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+    return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+  }
+
+  function colorFromString(s){
+    let h = 0; for(let i=0;i<s.length;i++) h = (h<<5) - h + s.charCodeAt(i);
+    const hue = Math.abs(h) % 360;
+    return `hsl(${hue} 70% 45%)`;
   }
 
   function renderMessages(){
     const list = readMessages();
     messagesList.innerHTML = '';
+    messageCount.textContent = `${list.length} message${list.length===1 ? '' : 's'}`;
     if(list.length === 0){
-      messagesList.innerHTML = '<p style="color:#444;">No messages yet.</p>';
+      messagesList.innerHTML = '<p style="color:#555; margin:0">No messages yet.</p>';
       return;
     }
     // newest first
@@ -56,15 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const body = escapeHtml(m.message || '');
       const time = m.submittedAt ? formatDate(m.submittedAt) : '';
 
-      div.innerHTML = `
+      // avatar
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      avatar.style.background = colorFromString(name || mail || String(idx));
+      avatar.textContent = initials(name || mail);
+
+      const content = document.createElement('div');
+      content.style.flex = '1';
+      content.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
           <div style="font-weight:700">${name}</div>
           <div class="meta">${time}</div>
         </div>
         <div class="meta">${mail} • ${contact}</div>
-        <div style="margin-top:8px">${body.replace(/\n/g,'<br>')}</div>
+        <div style="margin-top:8px; white-space:pre-wrap">${body}</div>
       `;
 
+      div.appendChild(avatar);
+      div.appendChild(content);
       messagesList.appendChild(div);
     });
   }
