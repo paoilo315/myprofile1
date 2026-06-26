@@ -89,6 +89,8 @@
 
 ```
 <button type="submit">Send Message</button>
+    <p id="successMsg" class="msg success"></p>
+<p id="errorMsg" class="msg error"></p>
 
 <p id="successMsg" class="msg success">✅ Message sent!</p>
 <p id="errorMsg" class="msg error">❌ Failed to send</p>
@@ -99,9 +101,45 @@
 
 <!-- Supabase -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const supabase = window.supabase.createClient(
+    "https://npgwvbgyfxptkkcondav.supabase.co",
+    "sb_publishable_Sl97ODLF3RzUhsaOBkBctA_D8dYpqno"
+  );
+
+  const form = document.getElementById("contactForm");
+  const successMsg = document.getElementById("successMsg");
+  const errorMsg = document.getElementById("errorMsg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    successMsg.style.display = "none";
+    errorMsg.style.display = "none";
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const contact = document.getElementById("contact").value;
+    const message = document.getElementById("message").value;
+
+    const { error } = await supabase.from("messages").insert([
+      { name, email, contact, message }
+    ]);
+
+    if (error) {
+      errorMsg.innerText = "❌ Failed to send message";
+      errorMsg.style.display = "block";
+    } else {
+      successMsg.innerText = "✅ Message sent successfully!";
+      successMsg.style.display = "block";
+      form.reset();
+    }
+  });
+
+});
+</script>
   const supabase = window.supabase.createClient(
     "https://npgwvbgyfxptkkcondav.supabase.co",
     "sb_publishable_Sl97ODLF3RzUhsaOBkBctA_D8dYpqno"
