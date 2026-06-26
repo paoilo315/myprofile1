@@ -42,13 +42,20 @@
     </div>
     <div id="feedback">
         <h1>What do you think about this project?</h1>
-        <button class="feedback-btn">Like</button>
-        <button class="feedback-btn">Dislike</button>
-        <button class="feedback-btn">Prefer not to say</button>
+        <div class="feedback-actions">
+          <button class="feedback-btn" data-action="like">Like</button>
+          <button class="feedback-btn" data-action="dislike">Dislike</button>
+          <button class="feedback-btn" data-action="neutral">Prefer not to say</button>
+        </div>
+        <div id="feedbackSummary" aria-live="polite" class="feedback-summary" hidden>
+          <!-- Summary populated by script -->
+        </div>
     </div>
    
 
     
 </div>
+
+<script src="feedback.js"></script>
 </body>
 </html>
