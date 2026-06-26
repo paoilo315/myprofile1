@@ -61,8 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
       messagesList.innerHTML = '<p style="color:#555; margin:0">No messages yet.</p>';
       return;
     }
-    // newest first
-    list.slice().reverse().forEach((m, idx)=>{
+    // render newest first by iterating from the end
+    for(let i = list.length - 1; i >= 0; i--) {
+      const m = list[i];
       const div = document.createElement('div');
       div.className = 'msg-card';
       const name = escapeHtml(m.fullname || '—');
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // avatar
       const avatar = document.createElement('div');
       avatar.className = 'avatar';
-      avatar.style.background = colorFromString(name || mail || String(idx));
+      avatar.style.background = colorFromString(name || mail || String(i));
       avatar.textContent = initials(name || mail);
 
       const content = document.createElement('div');
@@ -88,10 +89,27 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="margin-top:8px; white-space:pre-wrap">${body}</div>
       `;
 
+      // delete button
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'btn small secondary';
+      delBtn.textContent = 'Delete';
+      delBtn.style.position = 'absolute';
+      delBtn.style.right = '12px';
+      delBtn.style.top = '12px';
+      delBtn.addEventListener('click', ()=>{
+        if(!confirm('Delete this message? This cannot be undone.')) return;
+        const current = readMessages();
+        // remove the item at index i in original array
+        current.splice(i, 1);
+        saveMessages(current);
+      });
+
       div.appendChild(avatar);
       div.appendChild(content);
+      div.appendChild(delBtn);
       messagesList.appendChild(div);
-    });
+    }
   }
 
   function appendMessage(obj){
