@@ -1,58 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>contact me</title>
-    <style>
-        body{
-        background-color: rgb(207, 222, 228);
-        color: rgb(231, 7, 7);
-    font-size: 20px;
-    font-weight: bold;
-    
-        }
-#contact {
-    background-color: rgb(238, 233, 233);
-    padding: 10px;
-    border-radius: 130px; height: 400px; width: 400px;
-    margin-top: 250px;
-    margin-left: 800px;
-}
-#contact h1 {
-    color: rgb(105, 19, 161);
-}
-#contact button {
-    background-color: rgb(105, 19, 161);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me</title>
+  <style>
+    :root{
+      --bg: #cfdde4;
+      --card: #eee9e9;
+      --accent: #6913a1;
+      --accent-2: #e70707;
+      --text: #1a1a1a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
+    .container{
+      max-width:1100px;
+      margin:40px auto;
+      padding:16px;
+    }
+    .panel{
+      background:var(--card);
+      border-radius:16px;
+      padding:16px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    }
+    .layout{
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+    }
+    /* Form column */
+    .form-col{
+      flex:1 1 420px;
+      min-width:280px;
+    }
+    /* Messages column */
+    .msgs-col{
+      width:420px;
+      max-width:40%;
+      min-width:260px;
+    }
+    h1{color:var(--accent); margin-top:0}
+    label{display:block; margin-top:12px; font-weight:600}
+    input[type=text], input[type=email], textarea{
+      width:100%;
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.12);
+      margin-top:6px;
+      font-size:15px;
+      resize:vertical;
+    }
+    textarea{min-height:120px}
+    .row{display:flex; gap:12px}
+    .btn{
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      margin-top:12px;
+    }
+    .btn.secondary{background:#6c6c6c}
+    .msg-card{
+      background:white;
+      border-radius:10px;
+      padding:10px;
+      margin-bottom:10px;
+      border:1px solid #eee;
+      word-break:break-word;
+    }
+    .meta{font-size:13px; color:#555}
+    .controls{display:flex; gap:8px; align-items:center; justify-content:flex-end}
 
-#contact button:hover {
-    background-color: rgb(231, 7, 7);
-    transform: translateY(-2px);
-}
-#contact input, #contact textarea {
-    width: 100%;
-}
-
-    </style>
+    /* small screens: stack columns */
+    @media (max-width:880px){
+      .layout{flex-direction:column}
+      .msgs-col{width:100%; max-width:none}
+    }
+    /* very small devices: reduce paddings */
+    @media (max-width:420px){
+      .container{padding:8px}
+      input[type=text], input[type=email], textarea{font-size:14px}
+      .btn{padding:8px 10px}
+    }
+  </style>
 </head>
 <body>
-    <div align="center" id="contact">
-        <h1>contact me</h1>
-        <label>fullname:</label>
-        <input type="text" placeholder="enter your fullname">
-        <label>email address:</label>
-        <input type="text" placeholder="enter your email">
-        <label>contact:</label>
-        <input type="text" placeholder="enter contact">
-        <p>your message: <textarea ></textarea></p>
-        <button>submit</button>
-    </div>
-        
+  <div class="container">
+    <div class="panel layout">
+      <div class="form-col">
+        <h1>Contact Me</h1>
+        <form id="contactForm" class="contact-form" novalidate>
+          <label for="fullname">Full name</label>
+          <input id="fullname" name="fullname" type="text" placeholder="Enter your full name" required>
 
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" placeholder="Enter your email" required>
+
+          <label for="contactInput">Contact (phone or social)</label>
+          <input id="contactInput" name="contact" type="text" placeholder="Enter contact">
+
+          <label for="message">Your message</label>
+          <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+
+          <div class="row">
+            <button class="btn" type="submit">Send message</button>
+            <button class="btn secondary" id="clearForm" type="button">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="msgs-col">
+        <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:8px">
+          <h2 style="margin:0; color:var(--accent)">Messages</h2>
+          <div class="controls">
+            <button class="btn secondary" id="exportCsv">Export CSV</button>
+            <button class="btn secondary" id="clearAll">Clear All</button>
+          </div>
+        </div>
+
+        <div id="messagesList" class="panel" style="max-height:520px; overflow:auto; padding:12px"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./contact.js"></script>
 </body>
 </html>
