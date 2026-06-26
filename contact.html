@@ -1,187 +1,139 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Me</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-body {
-  background: linear-gradient(135deg, #5f2c82, #49a09d);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
 
-/* Glass Card */
-.container {
-  width: 100%;
-  max-width: 500px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  padding: 30px;
-  color: white;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-}
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
 
-/* Title */
-.container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-/* Inputs */
-.input-group {
-  margin-bottom: 15px;
-}
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
 
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  outline: none;
-  font-size: 14px;
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
+    input:focus, textarea:focus {
+      border-color: #667eea;
+    }
 
-input::placeholder,
-textarea::placeholder {
-  color: #ddd;
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #667eea;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-input:focus,
-textarea:focus {
-  background: rgba(255,255,255,0.3);
-}
+    button:hover {
+      background: #5a67d8;
+    }
 
-/* Button */
-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #6c4df6;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    .msg {
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
 
-button:hover {
-  background: #5838e0;
-}
-
-/* Messages */
-#success, #error {
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  display: none;
-  text-align: center;
-}
-
-#success {
-  background: rgba(0, 200, 100, 0.2);
-  color: #00ffae;
-}
-
-#error {
-  background: rgba(255, 0, 0, 0.2);
-  color: #ff6b6b;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .container {
-    margin: 20px;
-  }
-}
-</style>
+    .success { color: green; }
+    .error { color: red; }
+  </style>
 
 </head>
 
 <body>
 
 <div class="container">
-  <h2>📩 Contact Me</h2>
+  <h2>Contact Us</h2>
 
   <form id="contactForm">
-    
-    <div class="input-group">
-      <input type="text" id="name" placeholder="Full Name" required>
-    </div>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="text" id="contact" placeholder="Phone Number" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
 
-    <div class="input-group">
-      <input type="email" id="email" placeholder="Email Address" required>
-    </div>
+```
+<button type="submit">Send Message</button>
 
-    <div class="input-group">
-      <input type="text" id="contact" placeholder="Phone or Social">
-    </div>
-
-    <div class="input-group">
-      <textarea id="message" rows="4" placeholder="Your Message" required></textarea>
-    </div>
-
-    <button type="submit">Send Message</button>
+<p id="successMsg" class="msg success">✅ Message sent!</p>
+<p id="errorMsg" class="msg error">❌ Failed to send</p>
+```
 
   </form>
-
-  <div id="success">✅ Message sent successfully!</div>
-  <div id="error">❌ Something went wrong. Try again.</div>
-
 </div>
 
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
 <script>
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+  const supabase = window.supabase.createClient(
+    "https://npgwvbgyfxptkkcondav.supabase.co",
+    "sb_publishable_Sl97ODLF3RzUhsaOBkBctA_D8dYpqno"
+  );
 
-  const button = document.querySelector("button");
-  button.textContent = "Sending...";
-  button.disabled = true;
+  const form = document.getElementById("contactForm");
+  const successMsg = document.getElementById("successMsg");
+  const errorMsg = document.getElementById("errorMsg");
 
-  const data = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    contact: document.getElementById("contact").value,
-    message: document.getElementById("message").value
-  };
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
+    successMsg.style.display = "none";
+    errorMsg.style.display = "none";
 
-    if (res.ok) {
-      document.getElementById("success").style.display = "block";
-      document.getElementById("error").style.display = "none";
-      document.getElementById("contactForm").reset();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const contact = document.getElementById("contact").value;
+    const message = document.getElementById("message").value;
+
+    const { error } = await supabase.from("messages").insert([
+      { name, email, contact, message }
+    ]);
+
+    if (error) {
+      console.error(error);
+      errorMsg.style.display = "block";
     } else {
-      throw new Error("fail");
+      successMsg.style.display = "block";
+      form.reset();
     }
-
-  } catch (err) {
-    document.getElementById("error").style.display = "block";
-  }
-
-  button.textContent = "Send Message";
-  button.disabled = false;
-});
+  });
 </script>
 
 </body>
