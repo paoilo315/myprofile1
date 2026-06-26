@@ -35,19 +35,21 @@
       padding:18px;
       box-shadow:0 6px 18px rgba(16,24,40,0.06);
     }
+    /* Make the main layout vertical rather than horizontal */
     .layout{
       display:flex;
+      flex-direction:column; /* stack vertically */
       gap:22px;
-      align-items:flex-start;
+      align-items:stretch; /* take full width */
     }
     .form-col{
-      flex:1 1 480px;
-      min-width:260px;
+      flex:1 1 auto;
+      min-width:0;
     }
     .msgs-col{
-      width:420px;
-      max-width:40%;
-      min-width:260px;
+      width:100%;
+      max-width:none;
+      min-width:0;
     }
     h1{color:var(--accent); margin:0 0 8px 0; font-size:26px}
     h2{margin:0; font-size:18px}
@@ -138,7 +140,7 @@
     .pagination{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:12px}
     .pagination button{padding:4px 8px; font-size:12px}
     .pagination .active{background:var(--accent); color:white}
-    /* small screens */
+    /* keep small screens responsive */
     @media (max-width:880px){
       .layout{flex-direction:column}
       .msgs-col{width:100%; max-width:none}
