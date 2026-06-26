@@ -1,28 +1,49 @@
-import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://npgwvbgyfxptkkcondav.supabase.co";
+const supabaseKey = "sb_publishable_Sl97ODLF3RzUhsaOBkBctA_D8dYpqno";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-);
+// Create client
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+const form = document.getElementById("contactForm");
 
-  const { name, email, contact, message } = req.body;
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Missing fields' });
-  }
+```
+// Get values
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const contact = document.getElementById("contact").value;
+const message = document.getElementById("message").value;
 
+try {
   const { data, error } = await supabase
-    .from('messages')
-    .insert([{ name, email, contact, message }]);
+    .from("messages")
+    .insert([
+      {
+        name: name,
+        email: email,
+        contact: contact,
+        message: message,
+      },
+    ]);
 
   if (error) {
-    return res.status(500).json({ error: error.message });
-  }
+    console.error("Supabase error:", error);
+    alert("❌ Failed to send message");
+  } else {
+    alert("✅ Message sent successfully!");
 
-  return res.status(200).json({ success: true });
+    // Reset form
+    form.reset();
+  }
+} catch (err) {
+  console.error("Unexpected error:", err);
+  alert("⚠️ Something went wrong");
 }
+```
+
+});
+});
